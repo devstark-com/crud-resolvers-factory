@@ -1,17 +1,17 @@
+const pluralize = require('pluralize')
 const { ValidationError } = require('../errors')
 
-function makeQuery ({
-  entityName,
-  entityNameUc,
-  entityNamePlural,
-  entityCtl,
-  relationsExpression
-}) {
+module.exports = function makeQuery (
+  { entityName, entityNameUc, entityNamePlural, entityCtl, relations },
+  { findOneMethod, findAllMethod, openCrudParser, getRelationsExpression }
+) {
   const { formatQuery, formatOrderBy } = openCrudParser(relations.map(r => r.name))
+  const relationsExpression = getRelationsExpression(relations)
+  const entityNamePluralInner = entityNamePlural || pluralize(entityName)
 
   return {
     [entityName]: async (_, query) => {
-      const res = await entityCtl.find(
+      const res = await entityCtl[findOneMethod](
         formatQuery(query.where),
         { relations: relationsExpression }
       )
@@ -21,7 +21,7 @@ function makeQuery ({
       return res
     },
 
-    [entityNamePlural]: async (_, query) => entityCtl.findAll(
+    [entityNamePluralInner]: async (_, query) => entityCtl[findAllMethod](
       formatQuery(query.where),
       {
         orderBy: formatOrderBy(query.orderBy),
