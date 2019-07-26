@@ -1,6 +1,6 @@
 {
   "name": "crud-resolvers-factory",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/devstark-com/crud-resolvers-factory.git"
   },
-  "keywords": [],
+  "keywords": [
+    "graphql",
+    "crud",
+    "code",
+    "generation",
+    "resolvers",
+    "factory"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {

@@ -2,7 +2,7 @@ const upperFirst = require('lodash/upperFirst')
 const makeQuery = require('./parts/query')
 const relationFactory = require('./parts/relations')
 const openCrudParser = require('open-crud-parser')
-const relationsExpression = require('../get-relations-expression')
+const relationsExpression = require('./get-relations-expression')
 
 module.exports = function ({ databaseEngine, findOneMethod, findAllMethod }) {
   return function ({
