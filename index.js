@@ -39,11 +39,21 @@ module.exports = function ({ databaseEngine, findOneMethod, findAllMethod }) {
 
     relations.forEach(r => {
       if (r.type === 'one') {
-        resolvers[entityNameUc][r.name] = relationFactory({ openCrudParser, getRelationsExpression })
+        resolvers[entityNameUc][r.name] = relationFactory({
+          findOneMethod,
+          findAllMethod,
+          openCrudParser,
+          getRelationsExpression
+        })
           .oneRelationFactory(r)
       }
       if (r.type === 'many') {
-        resolvers[entityNameUc][r.name] = relationFactory({ openCrudParser, getRelationsExpression })
+        resolvers[entityNameUc][r.name] = relationFactory({
+          findOneMethod,
+          findAllMethod,
+          openCrudParser,
+          getRelationsExpression
+        })
           .manyRelationFactory(r)
       }
       if (!['one', 'many'].includes(r.type)) throw new Error('Invalid relation type')
