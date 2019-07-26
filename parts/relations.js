@@ -1,4 +1,4 @@
-module.exports = function relationsFactory ({ openCrudParser, getRelationsExpression }) {
+module.exports = function relationsFactory ({ findOneMethod, findAllMethod, openCrudParser, getRelationsExpression }) {
   return {
     oneRelationFactory (relation) {
       const { formatQuery } = openCrudParser(relation.relations)
@@ -13,7 +13,7 @@ module.exports = function relationsFactory ({ openCrudParser, getRelationsExpres
         else if (!query.where.id_in) query.where.id_in = [relatedId]
         else query.where.id_in.push(relatedId)
 
-        return relation.controller.find(
+        return relation.controller[findOneMethod](
           formatQuery(query.where),
           { relations: relationsExpression })
       }
@@ -32,7 +32,7 @@ module.exports = function relationsFactory ({ openCrudParser, getRelationsExpres
         else if (!query.where.id_in) query.where.id_in = relatedIds
         else query.where.id_in.push(...relatedIds)
 
-        return relation.controller.findAll(
+        return relation.controller[findAllMethod](
           formatQuery(query.where),
           {
             orderBy: formatOrderBy(query.orderBy),
