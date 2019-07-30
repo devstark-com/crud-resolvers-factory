@@ -7,10 +7,16 @@ Currently mutation methods are not supported. They will be included soon.
 So it can be used with queries builded by openCRUD standard.
 Standard can be found here: https://www.opencrud.org/
 
+## Installation
+
+```bash
+npm i git+https://github.com/devstark-com/crud-resolvers-factory.git
+```
+
 ## Usage
 
 ```js
-const resolversFactory = require('crud-resolvers-factory')({
+const resolversFactory = require('crudgql')({
   databaseEngine: 'objection', // enum['objection'|'mongo']
   findAllMethod: 'findAll', // method to findAll entities in your data manipulator module
   findOneMethod: 'find' // method to findOne entities in your data manipulator module
