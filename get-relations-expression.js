@@ -13,7 +13,7 @@ module.exports = {
       : `[${relations.map(r => `${r.name}(selectId)`).join()}]`
   },
 
-  mongo: (relations, { simple = false } = {}) => {
+  mongoose: (relations, { simple = false } = {}) => {
     if (!relations) return ''
 
     if (simple) return relations.split(' ').filter(r => !!r).map(r => ({ path: r }))
