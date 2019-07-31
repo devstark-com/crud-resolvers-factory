@@ -11,7 +11,7 @@ module.exports = function ({ databaseEngine, findOneMethod, findAllMethod, creat
     entityNamePlural,
     entityCtl,
     relations = []
-  }, { makeOnly = [] }) {
+  }, { makeOnly = ['read', 'readAll', 'create', 'update', 'delete'] }) {
     const entityNameUc = upperFirst(entityName)
     const getRelationsExpression = relationsExpression[databaseEngine]
 
