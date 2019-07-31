@@ -1,10 +1,11 @@
 const upperFirst = require('lodash/upperFirst')
 const makeQuery = require('./parts/query')
+const makeMutation = require('./parts/mutation')
 const relationFactory = require('./parts/relations')
 const openCrudParser = require('open-crud-parser')
 const relationsExpression = require('./get-relations-expression')
 
-module.exports = function ({ databaseEngine, findOneMethod, findAllMethod }) {
+module.exports = function ({ databaseEngine, findOneMethod, findAllMethod, createMethod, updateMethod, deleteMethod }) {
   return function ({
     entityName,
     entityNamePlural,
@@ -18,20 +19,13 @@ module.exports = function ({ databaseEngine, findOneMethod, findAllMethod }) {
       Query: makeQuery(
         { entityName, entityNameUc, entityCtl, relations },
         { findOneMethod, findAllMethod, openCrudParser, getRelationsExpression }
+      ),
+
+      Mutation: makeMutation(
+        { entityNameUc, entityCtl, relations },
+        { createMethod, updateMethod, deleteMethod, openCrudParser, getRelationsExpression }
       )
 
-      // Mutation: {
-      //   [`add${entityNameUc}`]: async (_, { data }) => entityCtl.create(
-      //     data,
-      //     { relations: relationsExpression }
-      //   ),
-      //   [`update${entityNameUc}`]: async (_, { where, data }) => entityCtl.update(
-      //     formatQuery(where),
-      //     data,
-      //     { relations: relationsExpression }
-      //   ),
-      //   [`remove${entityNameUc}`]: async (_, { id }) => entityCtl.delete(id)
-      // },
     }
 
     if (relations.length) resolvers[entityNameUc] = {}
