@@ -11,19 +11,21 @@ module.exports = function ({ databaseEngine, findOneMethod, findAllMethod, creat
     entityNamePlural,
     entityCtl,
     relations = []
-  }) {
+  }, { makeOnly = [] }) {
     const entityNameUc = upperFirst(entityName)
     const getRelationsExpression = relationsExpression[databaseEngine]
 
     const resolvers = {
       Query: makeQuery(
         { entityName, entityNameUc, entityCtl, relations },
-        { findOneMethod, findAllMethod, openCrudParser, getRelationsExpression }
+        { findOneMethod, findAllMethod, openCrudParser, getRelationsExpression },
+        { makeOnly }
       ),
 
       Mutation: makeMutation(
         { entityNameUc, entityCtl, relations },
-        { createMethod, updateMethod, deleteMethod, openCrudParser, getRelationsExpression }
+        { createMethod, updateMethod, deleteMethod, openCrudParser, getRelationsExpression },
+        { makeOnly }
       )
 
     }
