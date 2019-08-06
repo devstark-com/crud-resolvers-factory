@@ -17,7 +17,7 @@ npm i git+https://github.com/devstark-com/crud-resolvers-factory.git
 
 ```js
 const resolversFactory = require('crudgql')({
-  databaseEngine: 'objection', // enum['objection'|'mongo']
+  databaseEngine: 'objection', // enum['objection'|'mongoose']
   findAllMethod: 'findAll', // method to findAll entities in your data manipulator module
   findOneMethod: 'find' // method to findOne entities in your data manipulator module
 })
@@ -52,7 +52,7 @@ resolvers == {
       const res = await entityCtl[findOneMethod](
         formatQuery(query.where), // method from https://github.com/devstark-com/open-crud-parser
         { relations: relationsExpression } // relationsExpression - specific to your databaseEngine
-        // examples
+        // examples:
         // mongo: [{ path: 'actors' }, { path: 'franchise' }]
         // objection: '[actors(selectId), franchise(selectId)]' or for one relation 'actors(selectId)'
       )
@@ -68,6 +68,21 @@ resolvers == {
         orderBy: formatOrderBy(query.orderBy), // method from https://github.com/devstark-com/open-crud-parser
         relations: relationsExpression
       })
+  },
+
+  Mutations: {
+    createMovie: async (_, { data }) => entityCtl[createMethod](
+        data,
+        { relations: relationsExpression }
+      ),
+
+    updateMovie: async (_, { where, data }) => entityCtl[updateMethod](
+        formatQuery(where), // method from https://github.com/devstark-com/open-crud-parser
+        data,
+        { relations: relationsExpression }
+      ),
+
+    deleteMovie: async (_, { id }) => entityCtl[deleteMethod](id)
   },
 
   Movie: {
