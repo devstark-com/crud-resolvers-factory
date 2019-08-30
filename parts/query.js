@@ -14,6 +14,8 @@ module.exports = function makeQuery (
 
   if (makeOnly.includes('read')) {
     queries[entityName] = async (_, query) => {
+      if (Object.keys(query.where).length < 1) throw new ValidationError(`WhereUniqueInput should not be empty`)
+
       const res = await entityCtl[findOneMethod](
         formatQuery(query.where),
         { relations: relationsExpression }
