@@ -3,7 +3,6 @@ module.exports = function makeMutation (
   { createMethod, updateMethod, deleteMethod, openCrudParser, getRelationsExpression },
   { makeOnly }
 ) {
-  const { formatQuery } = openCrudParser(relations.map(r => r.name))
   const relationsExpression = getRelationsExpression(relations)
 
   const mutations = {}
@@ -17,7 +16,7 @@ module.exports = function makeMutation (
 
   if (makeOnly.includes('update')) {
     mutations[`update${entityNameUc}`] = async (_, { where, data }) => entityCtl[updateMethod](
-      formatQuery(where),
+      where,
       data,
       { relations: relationsExpression }
     )
