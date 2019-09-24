@@ -5,7 +5,14 @@ const relationFactory = require('./parts/relations')
 const openCrudParser = require('open-crud-parser')
 const relationsExpression = require('./get-relations-expression')
 
-module.exports = function ({ databaseEngine, findOneMethod, findAllMethod, createMethod, updateMethod, deleteMethod }) {
+module.exports = function ({
+  databaseEngine,
+  findOneMethod = 'find',
+  findAllMethod = 'findAll',
+  createMethod = 'create',
+  updateMethod = 'update',
+  deleteMethod = 'delete'
+}) {
   return function ({
     entityName,
     entityNamePlural,
