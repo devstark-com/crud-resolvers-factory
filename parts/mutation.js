@@ -16,7 +16,7 @@ module.exports = function makeMutation (
 
   if (makeOnly.includes('update')) {
     mutations[`update${entityNameUc}`] = async (_, { where, data }) => entityCtl[updateMethod](
-      where,
+      Object.values(where)[0],
       data,
       { relations: relationsExpression }
     )
