@@ -9,6 +9,7 @@ module.exports = function ({
   databaseEngine,
   findOneMethod = 'find',
   findAllMethod = 'findAll',
+  countMethod = 'count',
   createMethod = 'create',
   updateMethod = 'update',
   deleteMethod = 'delete'
@@ -25,7 +26,7 @@ module.exports = function ({
     const resolvers = {
       Query: makeQuery(
         { entityName, entityNameUc, entityCtl, relations },
-        { findOneMethod, findAllMethod, openCrudParser, getRelationsExpression },
+        { findOneMethod, findAllMethod, countMethod, openCrudParser, getRelationsExpression },
         { makeOnly }
       ),
 
