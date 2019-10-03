@@ -34,7 +34,7 @@ module.exports = function makeQuery (
         formatQuery(query.where),
         {
           orderBy: formatOrderBy(query.orderBy),
-          offset: query.offset,
+          skip: query.skip,
           limit: query.limit,
           relations: relationsExpression
         })
