@@ -28,17 +28,20 @@ module.exports = function makeQuery (
   }
 
   if (makeOnly.includes('readAll')) {
-    queries[entityNamePluralInner] = async (_, query) => ({
-      totalCount: entityCtl[countMethod],
-      list: entityCtl[findAllMethod](
-        formatQuery(query.where),
-        {
-          orderBy: formatOrderBy(query.orderBy),
-          skip: query.skip,
-          limit: query.limit,
-          relations: relationsExpression
-        })
-    })
+    queries[entityNamePluralInner] = async (_, query) => {
+      const formatedQuery = formatQuery(query.where)
+      return {
+        totalCount: entityCtl[countMethod](formatedQuery),
+        list: entityCtl[findAllMethod](
+          formatedQuery,
+          {
+            orderBy: formatOrderBy(query.orderBy),
+            skip: query.skip,
+            limit: query.limit,
+            relations: relationsExpression
+          })
+      }
+    }
   }
 
   return queries
