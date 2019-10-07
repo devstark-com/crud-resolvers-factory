@@ -23,7 +23,7 @@ module.exports = function makeMutation (
   }
 
   if (makeOnly.includes('delete')) {
-    mutations[`delete${entityNameUc}`] = async (_, { id }) => entityCtl[deleteMethod](id)
+    mutations[`delete${entityNameUc}`] = async (_, { where }) => entityCtl[deleteMethod](Object.values(where)[0])
   }
 
   return mutations
